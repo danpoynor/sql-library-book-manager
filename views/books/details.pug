@@ -1,0 +1,40 @@
+extends ../layout
+
+block content
+
+  table
+    thead
+      tr
+        th Id
+        th Title
+        th Author
+        th Genre
+        th Year
+    tbody
+      tr
+        td= book.id
+        td= book.title
+        td
+          //- Since book validation requires an author this shouldn't be needed
+          //- in production, but it's here for devtime convenience.
+          if(book.Author)
+            = book.Author.full_name
+          else
+            span.errors No Author
+        td
+          //- Add comma with a space after each genre
+          if book.Genres && book.Genres.length > 0
+            each genre, index in book.Genres
+              a(href=`/genres/${genre.id}`)= genre.name
+              = book.Genres.length -1 !== index ? ', ' : ''
+          else
+            span.errors No Genres
+        td
+          if(book.year)
+            = book.year
+          else
+            span.errors No Year
+
+  a(class="button" href=`/books/${book.id}/edit`) Update Book
+
+  a(class="button" href="/books/" + book.id + "/delete") Delete Book

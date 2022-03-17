@@ -1,0 +1,13 @@
+if(errors)
+  include ../includes/form-error.pug
+
+fieldset
+  label(for="name") Name:
+  input(type="text", name="name" id="name" placeholder="Genre name" value=genre.name)
+
+fieldset
+  label(for="description") Description:
+  textarea(rows="10" name="description" id="description" placeholder="Short description")
+    =genre.description
+
+input(type="submit" value=genre.id ? "Update Genre" : "Create New Genre")

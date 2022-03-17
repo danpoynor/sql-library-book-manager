@@ -1,0 +1,44 @@
+extends ../layout
+
+block content
+
+  p
+    a(class="button" href="/genres/new")
+      | New Genre &#43;
+
+  if(genres.length === 0)
+    p.errors
+      | No genres found.
+  else
+
+    table.data-table
+      thead
+        tr
+          th Name
+          th Books
+          th Description
+          th Actions
+      tbody.hover-row
+        each genre in genres
+          tr
+            td.sorted
+              a(href=`/genres/${genre.id}`)= genre.name
+            if genre.Books.length
+              td.number
+                =genre.Books.length
+            else
+              td.number.dim 0
+            td
+              if genre.description
+                //- FIXME: Should try to avoid interpolation here.
+                //- https://pugjs.org/language/interpolation.html#string-interpolation-unescaped
+                | !{genre.description}
+              else
+                span.dim No description
+            td.actions
+              a(href=`/genres/${genre.id}`)
+                | View
+              a(href=`/genres/${genre.id}/edit`)
+                | Edit
+              a(href=`/genres/${genre.id}/delete`)
+                | Delete

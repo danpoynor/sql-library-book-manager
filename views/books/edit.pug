@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+
+  form(action="/books/" + book.id, method="post" autocomplete="off" novalidate)
+    include ./form.pug
+
+    a(class="button" href="/books") Cancel
+
+    a(class="button" href="/books/" + book.id + "/delete") Delete Book

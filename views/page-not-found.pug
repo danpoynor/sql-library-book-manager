@@ -1,0 +1,14 @@
+extends layout
+
+block content
+
+block content
+  .error-page-404
+
+    h1.errors Oops! An error occurred.
+
+    p.errors= `Error Message: ${error.status}: ${message}`
+
+    .soft-error
+      pre #{error.stack}
+

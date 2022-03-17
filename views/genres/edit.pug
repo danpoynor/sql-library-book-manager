@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+
+  form(action="/genres/" + genre.id, method="post" autocomplete="off" novalidate)
+    include ./form.pug
+
+    a(class="button" href="/genres") Cancel
+
+    a(class="button" href="/genres/" + genre.id + "/delete") Delete Genre

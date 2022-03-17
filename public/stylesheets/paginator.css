@@ -1,0 +1,104 @@
+/* Paginator */
+
+.paginator {
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  margin: 0 auto;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.paginator .limit select {
+  padding: .5rem;
+  width: auto;
+}
+
+.paginator .page-list * {
+  all: initial;
+}
+
+/* Hide h1 but keep it accessible for screen readers */
+.paginator .page-list > h1 {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  z-index: -1000;
+  -webkit-user-select: none;
+}
+
+.paginator .page-list ol {
+  display: inline-flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.paginator .page-list a,
+.paginator .page-list .active {
+  border-width: 1px;
+  border-style: solid;
+  display: block;
+  padding: var(--paginator-padding-y) var(--paginator-padding-x);
+}
+
+.paginator .page-list > h1 ~ a:not(:first-of-type),
+.paginator .page-list li:not(:first-child) a {
+  border-left-width: 0;
+}
+
+.paginator .page-list a + ol li:first-child a {
+  border-left-width: 0;
+}
+
+.paginator .page-list a {
+  background-color: #fff;
+  border-color: #dee2e6;
+  color: var(--theme-color-link);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.paginator .page-list a.first,
+.paginator .page-list a.last,
+.paginator .page-list a.prev,
+.paginator .page-list a.next {
+  border-radius: 0;
+  display: inline-block;
+}
+
+.paginator .page-list a:hover {
+  color: #0a58ca;
+  background-color: var(--theme-color-header-link-bg-hover);
+  /* border-color: #dee2e6; */
+}
+
+.paginator .page-list .active {
+  background-color: var(--theme-color-link);
+  border-color: var(--theme-color-link);
+  color: #fff;
+  cursor: default;
+}
+
+.paginator .page-list a.first-page,
+.paginator .page-list a.last-page {
+  display: block;
+  padding: var(--paginator-padding-y) var(--paginator-padding-x);
+}
+
+/* Dim a links that are not active */
+.paginator .page-list a:not([href]),
+.paginator .page-list a[href=""] {
+  color: var(--theme-color-light-gray);
+  cursor: default;
+}
+
+.paginator .page-list a:not([href]):hover,
+.paginator .page-list a[href=""]:hover {
+  background-color: initial;
+}

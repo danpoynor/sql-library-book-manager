@@ -1,0 +1,49 @@
+extends ../layout
+
+block content
+
+  table
+    thead
+      tr
+        th Name
+        th Book Count
+        th Date of Birth
+        th Date of Death
+    tbody
+      tr
+        td= author.full_name
+        td.number= author.Books.length
+        td= author.dob()
+        td= author.dod()
+
+  a(class="button" href=`/authors/${author.id}/edit`) Update Author
+
+  a(class="button" href="/authors/" + author.id + "/delete") Delete Author
+
+  hr
+
+  h3= `Books written by ${author.full_name}`
+
+  if(author.Books.length === 0)
+    p.errors
+      | No books found.
+  else
+    table
+      thead
+        tr
+          th Title
+          th Year
+          th Actions
+      tbody.hover-row
+        each book in author.Books
+          tr
+            td
+              a(href=`/books/${book.id}`)= book.title
+            td= book.year
+            td.actions
+              a(href=`/books/${book.id}`)
+                | View
+              a(href=`/books/${book.id}/edit`)
+                | Edit
+              a(href=`/books/${book.id}/delete`)
+                | Delete

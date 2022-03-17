@@ -1,0 +1,36 @@
+{
+  "name": "sql-library-book-manager",
+  "description": "Demo web application for managing a collection of books including pages to list, add, update, and delete books using JavaScript, Node.js, Express, Pug, SQLite and the SQL ORM Sequelize. App also includes pagination and search with filter features.",
+  "keywords": [
+    "javascript",
+    "express",
+    "orm",
+    "database",
+    "sqlite",
+    "pug",
+    "sequelize",
+    "node-js"
+  ],
+  "author": "Dan Poynor <danpoynor@gmail.com>",
+  "version": "0.1.0",
+  "private": true,
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "start:dev": "DEBUG=library-manager:* nodemon -e js,pug ./bin/www",
+    "db:reset": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all --seeders-path db/seeders"
+  },
+  "dependencies": {
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-validator": "^6.14.0",
+    "http-errors": "~1.6.3",
+    "luxon": "^2.3.1",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.15",
+    "pug": "^3.0.2",
+    "sequelize": "^6.17.0",
+    "sequelize-cli": "^6.4.1",
+    "sqlite3": "^5.0.3"
+  }
+}

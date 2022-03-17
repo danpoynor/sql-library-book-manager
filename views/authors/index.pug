@@ -1,0 +1,40 @@
+extends ../layout
+
+block content
+
+  p
+    a(class="button" href="/authors/new")
+      | New Author &#43;
+
+  if(authors.length === 0)
+    p.errors
+      | No authors found.
+  else
+
+    table.data-table
+      thead
+        tr
+          th Name
+          th Book Count
+          th Date of Birth
+          th Date of Death
+          th Actions
+      tbody.hover-row
+        each author in authors
+          tr
+            td
+              a(href=`/authors/${author.id}`)= author.full_name
+            if author.Books.length
+              td.number.sorted
+                =author.Books.length
+            else
+              td.number.dim No books
+            td= author.dob()
+            td= author.dod()
+            td.actions
+              a(href=`/authors/${author.id}`)
+                | View
+              a(href=`/authors/${author.id}/edit`)
+                | Edit
+              a(href=`/authors/${author.id}/delete`)
+                | Delete

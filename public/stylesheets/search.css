@@ -1,0 +1,81 @@
+.search {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.search-input {
+  display: flex;
+  margin: 0 auto;
+  flex-flow: row nowrap;
+  justify-items: center;
+  align-items: stretch;
+  max-width: 24rem;
+}
+
+.search button {
+  background: var(--theme-color-link);
+  border-radius: 0 .35em .35em 0;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0 15px;
+}
+
+.search input[type='search'] {
+  background-color: #edeff0;
+  border-radius: .35em 0 0 .35em;
+  border: 3px solid #d7dbdf;
+  font-size: 1em;
+  outline: none;
+  padding: 10px 15px;
+  width: 100%;
+}
+
+.search button:hover {
+  background-color: var(--theme-color-btn-hover-bg);
+}
+
+.search .hint {
+  color: #ccc;
+  margin: 0;
+  text-align: center;
+}
+
+.search h2 {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.search-filters {
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: .875em;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem auto;
+}
+
+span {
+  margin-right: 1rem;
+}
+
+.search-filters label {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  flex-flow: row nowrap;
+  font-weight: 400;
+  margin-right: 1rem;
+  min-width: 0;
+}
+
+.search-filters input[type='checkbox'] {
+  margin: 0 .33rem 0 0;
+}
