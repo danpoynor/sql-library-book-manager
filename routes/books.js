@@ -1,33 +1,43 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const books = require('../db/controllers/book.js');
 
-/* GET books listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+const db = require('../db');
+const { Book } = db.models;
 
-router.get('/books', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// NOTE: Route order matters!
+// Avoid '/new' being interpreted as '/:id'
+// by placing it before the ':id' route.
+// /new
+// /:id
 
-router.get('/books/new', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// Express Router docs https://expressjs.com/en/4x/api.html#router
 
-router.post('/books/new', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// Show new Book form
+router.get('/new', books.new);
 
-router.get('/books/:id', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// Save new Book
+router.post('/', books.create);
 
-router.post('/books/:id', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// Retrieve all Book
+router.get('/', books.findAll);
 
-router.get('/books/:id/delete', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// Retrieve single Book with id
+router.get('/:id', books.findOne);
+
+// Show edit form for a single Book with id
+router.get('/:id/edit', books.edit);
+
+// Update Book with id
+router.post('/:id', books.update);
+
+// Show Delete Book confirmation with id
+router.get('/:id/delete', books.delete);
+
+// Destroy Book with id
+router.post('/:id/delete', books.destroy);
+
+// Delete all Books
+router.delete('/', books.deleteAll);
 
 module.exports = router;

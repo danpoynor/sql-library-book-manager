@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+  include ../includes/subhead.pug
+
+  p Are you sure you want to delete the author named <strong>#{author.fullName()}</strong>?
+
+  form(action="/authors/" + author.id + "/delete", method="post" onsubmit="return confirm('Do you really want to delete this author?');")
+    a(href="/authors/" + author.id) No! Take me back!
+    |
+    input(type="submit", value = "Yes, I'm sure")
+

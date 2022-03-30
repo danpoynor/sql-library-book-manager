@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  include ../includes/subhead.pug
+
+  table
+    thead
+      tr
+        th Id
+        th Name
+        th Description
+    tbody
+      tr
+        td= genre.id
+        td= genre.name
+        td= genre.description
+
+  a(class="button" href=`/genres/${genre.id}/edit`) Update Genre
+
+  a(class="button" href="/genres/" + genre.id + "/delete") Delete Genre

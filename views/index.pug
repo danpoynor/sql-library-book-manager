@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  include includes/intro.pug
+
+  if error
+    p Error getting dynamic content.
+
+    h1 Books
+    p
+      a(class="button" href="/books/new")
+        | Create New Book &#43;
+
+  table
+    thead
+      tr
+        th Title
+        th Author
+        th Genre
+        th Year
+    tbody
+
+    each book in books
+      tr
+        td
+          a(href=`/books/${book.id}`)= book.title
+        //- td= book.author.fullName()
+        td= book.author
+        //- td= book.genre.name
+        td= book.genre
+        td= book.year

@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+  include ../includes/subhead.pug
+
+  form(action="/authors/" + author.id, method="post" autocomplete="off" novalidate)
+    include ./form.pug
+
+    a(class="button" href="/authors") Cancel
+
+    a(class="button" href="/authors/" + author.id + "/delete") Delete Author

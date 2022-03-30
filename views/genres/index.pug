@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  include ../includes/subhead.pug
+
+  p
+    a(class="button" href="/genres/new")
+      | New Genre &#43;
+
+  table
+    thead
+      tr
+        th Name
+        th Description
+    tbody
+
+    each genre in genres
+      tr
+        td
+          a(href=`/genres/${genre.id}`)= genre.name
+        td= genre.shortDescription()

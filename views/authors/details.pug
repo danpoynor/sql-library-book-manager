@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+  include ../includes/subhead.pug
+
+  table
+    thead
+      tr
+        th Id
+        th Name
+        th Date of Birth
+        th Date of Death
+    tbody
+      tr
+        td= author.id
+        td= author.fullName()
+        td= author.dob()
+        td= author.dod()
+
+  a(class="button" href=`/authors/${author.id}/edit`) Update Author
+
+  a(class="button" href="/authors/" + author.id + "/delete") Delete Author

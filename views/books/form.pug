@@ -1,0 +1,22 @@
+if(errors)
+  include ../includes/form-error.pug
+
+fieldset
+  label(for="title") Title:
+  input(type="text" name="title" placeholder="Book Title" autocomplete=false value=book.title)
+
+fieldset
+  label(for="author") Author:
+  input(type="text" name="author" placeholder="Author Name" autocomplete=false value=book.author)
+
+fieldset
+  label(for="genre") Genre:
+  input(type="text" name="genre" placeholder="Genre Name" autocomplete=false value=book.genre)
+
+fieldset
+  label(for="year") Year:
+  //- Get current fullYear value to use as placeholder and max value
+  - const currentYear = new Date().getFullYear();
+  input(type="number" name="year" min="0000" max=currentYear step="1" placeholder=currentYear autocomplete=false value=book.year)
+
+input(type="submit")

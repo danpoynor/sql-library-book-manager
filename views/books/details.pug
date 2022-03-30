@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+  include ../includes/subhead.pug
+
+  table
+    thead
+      tr
+        th Id
+        th Title
+        th Author
+        th Genre
+        th Year
+    tbody
+      tr
+        td= book.id
+        td= book.title
+        //- td= book.author.fullName()
+        td= book.author
+        //- td= book.genre.name
+        td= book.genre
+        td= book.year
+
+  a(class="button" href=`/books/${book.id}/edit`) Update Book
+
+  a(class="button" href="/books/" + book.id + "/delete") Delete Book

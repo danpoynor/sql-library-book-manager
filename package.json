@@ -2,6 +2,7 @@
   "name": "sql-library-book-manager",
   "version": "0.0.0",
   "private": true,
+  "main": "app.js",
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
@@ -16,10 +17,12 @@
     "express-validator": "^6.14.0",
     "helmet": "^5.0.2",
     "http-errors": "~1.6.3",
+    "luxon": "^2.3.1",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.15",
     "pug": "^3.0.2",
     "sequelize": "^6.17.0",
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.4.1",
+    "sqlite3": "^5.0.2"
   }
 }

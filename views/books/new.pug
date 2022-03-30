@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+  include ../includes/subhead.pug
+
+  form(action="/books", method="post" autocomplete="off" novalidate)
+    include ./form.pug
+
+    a(class="button" href="/books") Cancel
