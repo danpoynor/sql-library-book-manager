@@ -6,6 +6,18 @@ WIP - Demo web application for managing a collection of books including pages to
 details { outline: 1px solid #333; padding: 10px }
 </style>
 
+## TODO
+
+- [ ] Add a search bar to the list of books (case insensitive search by title, author, genre, year)
+- [ ] Add pagination to the list of books
+- [ ] Fix Author DOB and DOD dates
+- [ ] Add Author and Genre associations to Books
+- [ ] Test error middleware per #7 <https://teamtreehouse.com/projects/sql-library-manager#instructions>
+- [ ] Make sure the page-not-found.pug template is being used.
+- [ ] Validate in Lighthouse
+- [ ] Make sure clicking form labels focuses input fields
+
+
 ## Tech Stack
 
 - [Express](https://expressjs.com/en/starter/generator.html) (Express application generator used to set up initial boilerplate code)
