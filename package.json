@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
-    "serverstart": "DEBUG=sql-library-book-manager:* npm run devstart"
+    "serverstart": "DEBUG=sql-library-book-manager:* npm run devstart",
+    "seed:genres": "node_modules/.bin/sequelize db:seed --seed db/seeders/20220331025839-add-genres.js --seeders-path db/seeders/",
+    "seed:authors": "node_modules/.bin/sequelize db:seed --seed db/seeders/20220331025829-add-authors.js --seeders-path db/seeders/"
   },
   "dependencies": {
     "async": "^3.2.3",
