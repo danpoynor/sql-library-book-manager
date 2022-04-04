@@ -7,7 +7,7 @@ fieldset
 
 fieldset
   label(for="description") Description:
-  textarea(rows="4" name="description" placeholder="Short description")
+  textarea(rows="10" name="description" placeholder="Short description")
     =genre.description
 
-input(type="submit")
+input(type="submit" value=genre.id ? "Update Genre" : "Create New Genre")

@@ -20,7 +20,6 @@ const { Book } = db.models;
 router.get('/', async (req, res, next) => {
   try {
     const books = await Book.findAll({
-      attributes: ['id', 'title', 'author', 'genre', 'year'],
       order: [['year', 'DESC']]
     });
     res.render('index', { books, title: 'My Bookshelf' });

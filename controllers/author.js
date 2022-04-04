@@ -1,5 +1,5 @@
-const db = require('../');
-const { Author } = db.models;
+const models = require('../db/models');
+const { Author, Book } = models;
 
 // Show new Author form
 exports.new = async (req, res) => {
@@ -33,8 +33,12 @@ exports.create = async (req, res) => {
 exports.findAll = async (req, res, next) => {
   try {
     const authors = await Author.findAll({
-      attributes: ['id', 'firstName', 'lastName'],
-      order: [['firstName', 'DESC']]
+      order: [['first_name', 'DESC']],
+      include: [
+        {
+          model: Book
+        }
+      ]
     });
     res.render('authors/index', {
       authors,
@@ -47,10 +51,16 @@ exports.findAll = async (req, res, next) => {
 
 // Find single Author with an id
 exports.findOne = async (req, res) => {
-  const author = await Author.findByPk(req.params.id);
+  const author = await Author.findByPk(req.params.id, {
+    include: [
+      {
+        model: Book
+      }
+    ]
+  });
   res.render('authors/details', {
     author,
-    title: 'Author Details'
+    title: `Author Details: ${author.fullName()}`
   });
 };
 
@@ -110,6 +120,7 @@ exports.delete = async (req, res) => {
 exports.destroy = async (req, res) => {
   const author = await Author.findByPk(req.params.id);
   if (author) {
+    await author.setBooks(null);
     await author.destroy();
     res.redirect('/authors');
   } else {

@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const books = require('../db/controllers/book.js');
+const books = require('../controllers/book.js');
 
-const db = require('../db');
-const { Book } = db.models;
+const models = require('../db/models');
+const { Book } = models;
 
 // NOTE: Route order matters!
 // Avoid '/new' being interpreted as '/:id'

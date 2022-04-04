@@ -7,17 +7,26 @@ block content
     a(class="button" href="/authors/new")
       | New Author &#43;
 
-  table
-    thead
-      tr
-        th Name
-        th Date of Birth
-        th Date of Death
-    tbody
-
-    each author in authors
-      tr
-        td
-          a(href=`/authors/${author.id}`)= author.fullName()
-        td= author.dob()
-        td= author.dod()
+  if(authors.length === 0)
+    p.errors
+      | No authors found.
+  else
+    table
+      thead
+        tr
+          th Name
+          th Book Count
+          th Actions
+      tbody.hover-row
+        each author in authors
+          tr
+            td
+              a(href=`/authors/${author.id}`)= author.fullName()
+            td.number= author.Books.length
+            td.actions
+              a(href=`/authors/${author.id}`)
+                | View
+              a(href=`/authors/${author.id}/edit`)
+                | Edit
+              a(href=`/authors/${author.id}/delete`)
+                | Delete

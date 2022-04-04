@@ -6,15 +6,47 @@ block content
   table
     thead
       tr
-        th Id
         th Name
+        th Book Count
         th Description
     tbody
       tr
-        td= genre.id
         td= genre.name
-        td= genre.description
+        td.number= genre.Books.length
+        td
+          if genre.description
+            =genre.description
+          else
+            span.errors No description
 
   a(class="button" href=`/genres/${genre.id}/edit`) Update Genre
 
   a(class="button" href="/genres/" + genre.id + "/delete") Delete Genre
+
+  hr
+
+  h3= `${genre.name} Books`
+
+  if(genre.Books.length === 0)
+    p.errors
+      | No books found.
+  else
+    table
+      thead
+        tr
+          th Title
+          th Year
+          th Actions
+      tbody.hover-row
+        each book in genre.Books
+          tr
+            td
+              a(href=`/books/${book.id}`)= book.title
+            td= book.year
+            td.actions
+              a(href=`/books/${book.id}`)
+                | View
+              a(href=`/books/${book.id}/edit`)
+                | Edit
+              a(href=`/books/${book.id}/delete`)
+                | Delete

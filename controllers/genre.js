@@ -1,5 +1,5 @@
-const db = require('../');
-const { Genre } = db.models;
+const models = require('../db/models');
+const { Book, Genre, BookGenres } = models;
 
 // Show new Genre form
 exports.new = async (req, res) => {
@@ -40,12 +40,16 @@ exports.create = async (req, res) => {
 exports.findAll = async (req, res, next) => {
   try {
     const genres = await Genre.findAll({
-      attributes: ['id', 'name', 'description'],
-      order: [['name', 'DESC']]
+      order: [['name', 'ASC']],
+      include: [
+        {
+          model: Book
+        }
+      ]
     });
     res.render('genres/index', {
-      title: 'Genre List',
-      genres
+      genres,
+      title: 'Genre List'
     });
   } catch (err) {
     next(err);
@@ -54,9 +58,15 @@ exports.findAll = async (req, res, next) => {
 
 // Find single Genre with an id
 exports.findOne = async (req, res) => {
-  const genre = await Genre.findByPk(req.params.id);
+  const genre = await Genre.findByPk(req.params.id, {
+    include: [
+      {
+        model: Book
+      }
+    ]
+  });
   res.render('genres/details', {
-    title: 'Genre Detail',
+    title: `Genre Detail: ${genre.name}`,
     genre: genre
   });
 };
@@ -120,6 +130,7 @@ exports.delete = async (req, res) => {
 exports.destroy = async (req, res) => {
   const genre = await Genre.findByPk(req.params.id);
   if (genre) {
+    await genre.setBooks(null);
     await genre.destroy();
     res.redirect('/genres');
   } else {

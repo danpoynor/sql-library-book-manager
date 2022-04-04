@@ -6,17 +6,41 @@ block content
   table
     thead
       tr
-        th Id
         th Name
-        th Date of Birth
-        th Date of Death
+        th Book Count
     tbody
       tr
-        td= author.id
         td= author.fullName()
-        td= author.dob()
-        td= author.dod()
+        td.number= author.Books.length
 
   a(class="button" href=`/authors/${author.id}/edit`) Update Author
 
   a(class="button" href="/authors/" + author.id + "/delete") Delete Author
+
+  hr
+
+  h3= `Books written by ${author.fullName()}`
+
+  if(author.Books.length === 0)
+    p.errors
+      | No books found.
+  else
+    table
+      thead
+        tr
+          th Title
+          th Year
+          th Actions
+      tbody.hover-row
+        each book in author.Books
+          tr
+            td
+              a(href=`/books/${book.id}`)= book.title
+            td= book.year
+            td.actions
+              a(href=`/books/${book.id}`)
+                | View
+              a(href=`/books/${book.id}/edit`)
+                | Edit
+              a(href=`/books/${book.id}/delete`)
+                | Delete

@@ -1,3 +1,4 @@
+'use strict';
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
@@ -7,31 +8,38 @@ module.exports = (sequelize) => {
         this.description.length > 64 ? this.description.substring(0, 64) + '...' : this.description;
       return shortDesc;
     }
+
+    static associate(models) {
+      Genre.belongsToMany(models.Book, { through: models.BookGenres });
+    }
   }
   Genre.init(
     {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
+          notNull: {
+            msg: 'Please provide a value for "Name"'
+          },
           notEmpty: {
-            msg: '"Name" is required'
+            msg: 'Please provide a value for "Name"'
           },
           len: {
-            args: [1, 64],
-            msg: '"Name" must be between 3 and 64 characters'
+            args: [1, 255],
+            msg: '"Name" must be between 2 and 255 characters'
           }
         }
       },
-      description: {
-        type: DataTypes.TEXT,
-        defaultValue: '',
-        allowNull: true
-      }
+      description: DataTypes.TEXT
     },
-    { sequelize, modelName: 'Genre' }
+    {
+      sequelize,
+      modelName: 'Genre',
+      tableName: 'Genres',
+      underscored: true,
+      timestamps: false
+    }
   );
-
   return Genre;
 };

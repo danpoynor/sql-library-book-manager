@@ -7,15 +7,32 @@ block content
     a(class="button" href="/genres/new")
       | New Genre &#43;
 
-  table
-    thead
-      tr
-        th Name
-        th Description
-    tbody
-
-    each genre in genres
-      tr
-        td
-          a(href=`/genres/${genre.id}`)= genre.name
-        td= genre.shortDescription()
+  if(genres.length === 0)
+    p.errors
+      | No genres found.
+  else
+    table
+      thead
+        tr
+          th Name
+          th Books
+          th Description
+          th Actions
+      tbody.hover-row
+        each genre in genres
+          tr
+            td
+              a(href=`/genres/${genre.id}`)= genre.name
+            td.number= genre.Books.length
+            td
+              if genre.description
+                =genre.description
+              else
+                span.errors No description
+            td.actions
+              a(href=`/genres/${genre.id}`)
+                | View
+              a(href=`/genres/${genre.id}/edit`)
+                | Edit
+              a(href=`/genres/${genre.id}/delete`)
+                | Delete

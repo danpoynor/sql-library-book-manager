@@ -3,7 +3,7 @@ extends ../layout
 block content
   include ../includes/subhead.pug
 
-  p Are you sure you want to delete named <strong>#{genre.name}</strong>?
+  p Are you sure you want to delete the genre named <strong>#{genre.name}</strong>?
 
   form(action="/genres/" + genre.id + "/delete", method="post" onsubmit="return confirm('Do you really want to delete this genre?');")
     a(href="/genres/" + genre.id) No! Take me back!

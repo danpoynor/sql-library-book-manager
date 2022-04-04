@@ -2,6 +2,20 @@
 
 WIP - Demo web application for managing a collection of books including pages to list, add, update, and delete books using JavaScript, Node.js, Express, Pug, SQLite and the SQL ORM Sequelize
 
+---
+
+## Reset Database
+
+After testing and debugging, you can reset the database by running the following command:
+
+```bash
+npm run db:reset
+```
+
+This will run scripts located in `db/migrations` to recreate the `Authors`, `Genres`, and `Books` tables then populate them with the default data from `db/seeders`.
+
+---
+
 <style>
 details { outline: 1px solid #333; padding: 10px }
 </style>
@@ -157,6 +171,8 @@ The use of variable-length records by SQLite has a number of advantages. It resu
 
 When you're building large applications, setting up Sequelize and writing all the model configurations by hand (including importing & exporting files) can get tiresome, and you could make a mistake.
 
+Use 'migrations' to manage your database schema instead of using `sync()`.
+
 The [Sequelize CLI](https://github.com/sequelize/cli) is a tool that initializes all the configuration code, folders and helpers you need for your application. It also sets up and [configures Sequelize](http://docs.sequelizejs.com/manual/migrations.html#the-cli) to generate and export your models.
 
 ### Manage Multiple Environments
@@ -207,6 +223,23 @@ Options:
   --version  Show version number                                                                                                  [boolean]
   --help     Show help
 ```
+
+</details>
+
+<details>
+<summary>Sequelize Migrations with sequelize-cli</summary>
+
+Use migrations to manipulate the database table definitions. They help define:
+
+- Tables
+- Columns
+- Relationships
+
+Compared to models: Models are used by Sequelize to generate methods for accessing and updating the database tables - such as creating and deleting rows.
+
+Migrations make working on the database easier at scale, such as if there are multiple developers working on the app. It a way to have version control  for the database structure.
+
+Migrations are sequential and need to be run in order. They dont' make sense if they don't run in order, so they're ordered by filename starting with the date and time.
 
 </details>
 
@@ -963,8 +996,6 @@ However, soft-deleted records also take up space in your database. They could ad
 
 Now that you've learned about CRUD operations with Sequelize, [check out the docs](https://sequelize.org/master/manual/instances.html#working-in-bulk--creating--updating-and-destroying-multiple-rows-at-once-) to view the methods for creating, updating, and deleting <strong>multiple</strong> instances (or rows) at once.
 
-### Resources
-
 - [Destroying / Deleting persistent instances](https://sequelize.org/master/manual/instances.html#destroying---deleting-persistent-instances)
 - [`destroy()`](https://sequelize.org/master/class/lib/model.js%7EModel.html#static-method-destroy)
 - [Physical vs. logical / soft delete](https://stackoverflow.com/questions/378331/physical-vs-logical-soft-delete-of-database-record)
@@ -977,7 +1008,7 @@ Now that you've learned about CRUD operations with Sequelize, [check out the doc
 
 ### Associations (Data Relationships)
 
-The data in your models can be described using the nouns that you've identified for your application – in this case, `Movie` and `Person`.
+The data in your models can be described using the nouns that you've identified for your application - in this case, `Movie` and `Person`.
 
 There are also relationships between your models (or tables). For example, a Movie might be associated with a Person as a director, and might also be associated with one or more "People" (the plural of Person) as its actors. These associations between Movie and Person are known as "data relationships"
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const genres = require('../db/controllers/genre.js');
+const genres = require('../controllers/genre.js');
 
 const db = require('../db');
 const { Genre } = db.models;

@@ -6,17 +6,55 @@ fieldset
   input(type="text" name="title" placeholder="Book Title" autocomplete=false value=book.title)
 
 fieldset
-  label(for="author") Author:
-  input(type="text" name="author" placeholder="Author Name" autocomplete=false value=book.author)
+  label(for="author_id") Author:
+
+  select(name="author_id")
+    if (!book.Author)
+      option(value="") Select Author
+    //- Loop through authors
+    if (authors)
+      each author in authors
+        //- Check if author was selected previously
+        if (book.Author && book.Author.id === author.id)
+          option(value=author.id, selected)
+            = author.fullName()
+        else
+          option(value=author.id)
+            = author.fullName()
 
 fieldset
   label(for="genre") Genre:
-  input(type="text" name="genre" placeholder="Genre Name" autocomplete=false value=book.genre)
+
+  .checkboxes
+    //- TODO: This could probably be shortened to only have
+    //- one loop through genres, like authors above
+    if (!book.Genres)
+      //- Loop through genres and create checkboxes
+      for genre in genres
+        label(for=genre.name.toLowerCase())
+          input(type="checkbox" id=genre.name.toLowerCase() name="genres" value=genre.id)
+          //- input(type="checkbox" name=genre.name.toLowerCase() value=genre.id)
+          =genre.name
+    else
+      //- Create array of selected genres
+      - let selectedGenres = []
+      each genre in book.Genres
+        - selectedGenres.push(genre.id)
+
+      //- Loop through genres and create checkboxes
+      for genre in genres
+        label(for=genre.name.toLowerCase())
+          // Check if this genre is selected
+          if (selectedGenres.includes(genre.id))
+            input(type="checkbox" id=genre.name.toLowerCase() name="genres" value=genre.id checked)
+            =genre.name
+          else
+            input(type="checkbox" id=genre.name.toLowerCase() name="genres" value=genre.id)
+            =genre.name
 
 fieldset
   label(for="year") Year:
-  //- Get current fullYear value to use as placeholder and max value
   - const currentYear = new Date().getFullYear();
   input(type="number" name="year" min="0000" max=currentYear step="1" placeholder=currentYear autocomplete=false value=book.year)
 
-input(type="submit")
+input(type="submit" value=book.id ? "Update Book" : "Create New Book")

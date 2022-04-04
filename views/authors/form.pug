@@ -3,18 +3,10 @@ if(errors)
 
 fieldset
   label(for="firstName") First Name:
-  input(type="text" name="firstName" placeholder="Given name" autocomplete=false value=author.firstName)
+  input(type="text" name="first_name" placeholder="Given name" autocomplete=false value=author.first_name)
 
 fieldset
   label(for="lastName") Last Name:
-  input(type="text" name="lastName" placeholder="Family name (Surname)" value=author.lastName)
+  input(type="text" name="last_name" placeholder="Family name (Surname)" value=author.last_name)
 
-fieldset
-  label(for="date_of_birth") Date of birth:
-  input(type="date" name="date_of_birth" value=author.date_of_birth)
-
-fieldset
-  label(for="date_of_death") Date of death:
-  input(type="date" name="date_of_death" value=author.date_of_death)
-
-input(type="submit")
+input(type="submit" value=author.id ? "Update Author" : "Create New Author")
