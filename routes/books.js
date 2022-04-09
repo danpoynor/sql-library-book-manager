@@ -25,6 +25,9 @@ router.get('/', books.findAll);
 // Retrieve single Book with id
 router.get('/:id', books.findOne);
 
+// Search Books for a given query
+// router.get('/search/:query', books.search);
+
 // Show edit form for a single Book with id
 router.get('/:id/edit', books.edit);
 

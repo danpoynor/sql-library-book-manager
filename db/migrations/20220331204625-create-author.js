@@ -15,7 +15,9 @@ module.exports = {
       last_name: {
         type: Sequelize.STRING,
         allowNull: false
-      }
+      },
+      date_of_birth: Sequelize.DATEONLY,
+      date_of_death: Sequelize.DATEONLY
     });
   },
   async down(queryInterface, Sequelize) {

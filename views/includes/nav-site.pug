@@ -1,17 +1,38 @@
+// Get current page title to determine which nav link to highlight
+- const currentPage = 'X'
+
 ul
+  li.nav-section-title
+    | Browse
   li
-    a(href='/') Home
+    if currentPage === 'book-list'
+      .active All Books
+    else
+      a(href='/') All Books
   li
-    a(href='/books') All books
+    if currentPage === 'author-list'
+      .active All Authors
+    else
+      a(href='/authors') All Authors
   li
-    a(href='/authors') All authors
+    if currentPage === 'genre-list'
+      .active All Genres
+    else
+      a(href='/genres') All Genres
+  li.nav-section-title
+    | Create
   li
-    a(href='/genres') All genres
+    if currentPage === 'new-author'
+      .active Create New Author
+    else
+      a(href='/authors/new') Create New Author
   li
-    hr
+    if currentPage === 'new-genre'
+      .active Create New Genre
+    else
+      a(href='/genres/new') Create New Genre
   li
-    a(href='/authors/new') Create new author
-  li
-    a(href='/genres/new') Create new genre
-  li
-    a(href='/books/new') Create new book
+    if currentPage === 'new-book'
+      .active Create New Book
+    else
+      a(href='/books/new') Create New Book

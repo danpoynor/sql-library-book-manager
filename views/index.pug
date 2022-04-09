@@ -11,21 +11,34 @@ block content
       a(class="button" href="/books/new")
         | Create New Book &#43;
 
-  table
-    thead
-      tr
-        th Title
-        th Author
-        th Genre
-        th Year
-    tbody
+  if(books.length === 0)
+    p.errors
+      | No books found.
+  else
+    table
+      thead
+        tr
+          th Title
+          th Author
+          th Genre
+          th Year
+      tbody
 
-    each book in books
-      tr
-        td
-          a(href=`/books/${book.id}`)= book.title
-        //- td= book.author.fullName()
-        td= book.author
-        //- td= book.genre.name
-        td= book.genre
-        td= book.year
+      each book in books
+        tr
+          td
+            a(href=`/books/${book.id}`)= book.title
+          td
+            if book.Author
+              a(href=`/authors/${book.Author.id}`)= book.Author.fullName()
+            else
+              span.errors No Author
+          td
+            //- Add comma with a space after each genre
+            if book.Genres && book.Genres.length > 0
+              each genre, index in book.Genres
+                a(href=`/genres/${genre.id}`)= genre.name
+                = book.Genres.length -1 !== index ? ', ' : ''
+            else
+              span.errors No Genres
+          td= book.year

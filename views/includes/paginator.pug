@@ -1,0 +1,90 @@
+mixin paginator(count)
+  //- Note paginator.limit and paginator.offset are passed in through `res.render()`
+  - const limit = paginator.limit
+  - const offset = paginator.offset
+  - const totalPages = Math.ceil(count / limit)
+  - const activePageIndex = (Math.ceil(offset / limit) + 1)
+
+  - let searchQueryOnly = ''
+  - let searchQuery = ''
+  if searchPhrase
+    - searchQueryOnly = `?search=${searchPhrase.replace(/\s/g, '+')}`
+    - searchQuery = `&search=${searchPhrase.replace(/\s/g, '+')}`
+
+
+  .paginator
+
+    //- Results info
+    //- .info
+    //-   | Page #{activePageIndex} of #{totalPages} (Total Items/Rows #{count})
+
+    //- .offset
+    //-   | Current offset is: #{offset}
+
+    //- Number of results to display
+    .limit
+      | Per page:
+      select(name="limit")
+        each n in [3, 5, 10, 25, 50, 100]
+          if n === parseInt(limit)
+            option(selected value=n)= n
+          else
+            option(value=n)= n
+
+    .page-list
+      h1 Page Navigation
+      if(activePageIndex > 1)
+        a.first(href=`/books${searchQueryOnly}`)
+          | << First
+      else
+        // Make the link inactive/disabled by removing the href attribute.
+        // This will make the link untabbable and apply styling.
+        a.first
+          | << First
+
+      //- Previous page
+      if activePageIndex > 1
+        a.prev(href=`/books?limit=${limit}&offset=${(activePageIndex - 2) * limit}${searchQuery}`)
+          | < Previous
+      else
+        a.prev
+          | < Previous
+
+      //- Create list of pages
+      - let n = 0;
+      ol
+        while n < totalPages
+          - n++
+          li
+            if n === activePageIndex
+              span.active(title=`Current page ${n}`)= n
+            else
+              //- limit=${limit}&offset=${offset}
+              a(href=`/books?limit=${limit}&offset=${(n - 1) * limit}${searchQuery}`)= n
+
+      //- Next page
+      if activePageIndex < totalPages
+        a.next(href=`/books?limit=${limit}&offset=${parseInt(offset) + parseInt(limit)}${searchQuery}`)
+          | Next >
+      else
+
+        a.next
+          | Next >
+
+      if(activePageIndex < totalPages)
+        a.last(href=`/books?limit=${limit}&offset=${limit * (totalPages - 1)}${searchQuery}`)
+          | Last >>
+      else
+        a.last
+          | Last >>
+
+  script.
+    const limitSelector = document.querySelector('[name=limit]');
+    if (limitSelector) {
+      limitSelector.addEventListener('change', (event) => {
+        const newLimit = event.target.value;
+        const offset = 0;
+        //- window.location.href = `/books?limit=${limit}&offset=${offset}${searchQuery}`;
+        window.location.search = 'limit=' + newLimit;
+      });
+    }

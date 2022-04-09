@@ -6,13 +6,13 @@ WIP - Demo web application for managing a collection of books including pages to
 
 ## Reset Database
 
-After testing and debugging, you can reset the database by running the following command:
+After creating, updating, or deleting entries, you can reset the database if needed by running the following command:
 
 ```bash
 npm run db:reset
 ```
 
-This will run scripts located in `db/migrations` to recreate the `Authors`, `Genres`, and `Books` tables then populate them with the default data from `db/seeders`.
+This will run scripts located in `db/migrations` to recreate `Authors`, `Genres`, and `Books` tables in the database then populate them with the default data from `db/seeders`.
 
 ---
 
@@ -22,21 +22,51 @@ details { outline: 1px solid #333; padding: 10px }
 
 ## TODO
 
-- [ ] Add a search bar to the list of books (case insensitive search by title, author, genre, year)
-- [ ] Add pagination to the list of books
-- [ ] Fix Author DOB and DOD dates
-- [ ] Add Author and Genre associations to Books
 - [ ] Test error middleware per #7 <https://teamtreehouse.com/projects/sql-library-manager#instructions>
-- [ ] Make sure the page-not-found.pug template is being used.
+- [x] Make sure the page-not-found.pug template is being used.
 - [ ] Validate in Lighthouse
-- [ ] Make sure clicking form labels focuses input fields
+- Set default options `underscored: true` and `timestamps: false` globally when declaring the `sequelize` object using `const sequelize = new Sequelize(...);` rather than declaring in each model definition ([more info](https://sequelize.org/api/v6/class/src/sequelize.js~sequelize#instance-constructor-constructor)). Couldn't get this to work right off.
+- Consider using 'page' slug in url instead of 'limit' and 'offset' in paginator.
+- Investigate using [transactions](https://sequelize.org/docs/v6/other-topics/transactions/) to make the code more production ready.
 
+---
+
+## Bugs
+
+- If there's a space in the search query nothing is returned.
+- Genres of a book are not searched. Issue with two-way many-to-many `where` clause.
+- If limit and query are both set to 0 in the url the app crashes with a memory error.
+
+---
 
 ## Tech Stack
 
 - [Express](https://expressjs.com/en/starter/generator.html) (Express application generator used to set up initial boilerplate code)
-- [SQLite](https://www.sqlite.org/) - the most used database engine in the world
+- [@vscode/sqlite3@5.0.7](https://www.sqlite.org/) - the most used database engine in the world
 - [Sequelize](https://sequelize.org/master/manual/getting-started.html) - ORM for SQLite
+- [Pug](https://pugjs.org/api/getting-started.html) - templating engine for Express
+- [Node.js](https://nodejs.org/en/) - JavaScript runtime environment
+- [Luxon](https://moment.github.io/luxon/#/) - Date and time library (alternative to [Moment.js](https://moment.github.io/luxon/#/why?id=place-in-the-moment-project))
+
+Note the Sequelize SQLite3 security warning mentioned at <https://sequelize.org/docs/v6/other-topics/dialect-specific-things/#sqlite>
+
+---
+
+## Sequelize Features Used Highlights
+
+- [Validations & Constraints](https://sequelize.org/docs/v6/core-concepts/validations-and-constraints/) - used to validate data before saving to the database.
+- [Associations](https://sequelize.org/docs/v6/core-concepts/assocs/) - used to create relationships between models including [advanced-many-to-many](https://sequelize.org/docs/v6/advanced-association-concepts/advanced-many-to-many/) relationships using a junction table.
+- [Migrations](https://sequelize.org/docs/v6/other-topics/migrations/) used to generate database tables and initialize models instead of [sync()](https://sequelize.org/docs/v6/core-concepts/model-basics/#model-synchronization). More info [1](https://stackoverflow.com/questions/41595755/sequelize-sync-vs-migrations), [2](https://stackoverflow.com/questions/21105748/sequelize-js-how-to-use-migrations-and-sync#answer-29941038)
+- [Seed Data](https://sequelize.org/docs/v6/other-topics/migrations/#creating-the-first-seed-data) used to populate the database with initial and repopulate default data in the database.
+- [Sub Queries](https://sequelize.org/docs/v6/other-topics/sub-queries/) - used to order Authors list by associate Book count.
+
+
+```js
+Author.hasMany(models.Book); 
+Book.belongsTo(models.Author);
+Book.belongsToMany(models.Genre, { through: models.BookGenres });
+Genre.belongsToMany(models.Book, { through: models.BookGenres });
+```
 
 ---
 

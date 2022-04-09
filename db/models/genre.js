@@ -4,13 +4,14 @@ const { Model, DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   class Genre extends Model {
     shortDescription() {
-      const shortDesc =
-        this.description.length > 64 ? this.description.substring(0, 64) + '...' : this.description;
-      return shortDesc;
+      return this.description.length > 64 ? this.description.substring(0, 64) + '...' : this.description;
     }
 
     static associate(models) {
-      Genre.belongsToMany(models.Book, { through: models.BookGenres });
+      Genre.belongsToMany(models.Book, {
+        through: models.BookGenres,
+        foreignKey: 'genre_id'
+      });
     }
   }
   Genre.init(

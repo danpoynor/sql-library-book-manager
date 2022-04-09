@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 const models = require('../db/models');
 const { Author, Book } = models;
 
@@ -16,7 +17,10 @@ exports.create = async (req, res) => {
     author = await Author.create(req.body);
     res.redirect('/authors/' + author.id);
   } catch (error) {
-    if (error.name === 'SequelizeValidationError') {
+    if (
+      error.name === 'SequelizeValidationError' ||
+      error.name === 'SequelizeUniqueConstraintError'
+    ) {
       author = await Author.build(req.body);
       res.render('authors/new', {
         author,
@@ -32,14 +36,33 @@ exports.create = async (req, res) => {
 // Retrieve all Authors from the database
 exports.findAll = async (req, res, next) => {
   try {
+    // const authors = await Author.findAll({
+    //   include: { all: true }});
     const authors = await Author.findAll({
-      order: [['first_name', 'DESC']],
+      // To order the authors by bookCount, use a sub-query
+      // to get the associated row count of each author
+      // https://sequelize.org/docs/v6/other-topics/sub-queries/#using-sub-queries-for-complex-ordering
+      attributes: {
+        include: [
+          [
+            Sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM books AS book
+              WHERE
+              book.author_id = author.id
+            )`),
+            'bookCount'
+          ]
+        ]
+      },
+      order: [[Sequelize.literal('bookCount'), 'DESC']],
       include: [
         {
           model: Book
         }
       ]
     });
+    // res.json(authors);
     res.render('authors/index', {
       authors,
       title: 'Author List'
@@ -89,7 +112,10 @@ exports.update = async (req, res) => {
       res.sendStatus(404);
     }
   } catch (error) {
-    if (error.name === 'SequelizeValidationError') {
+    if (
+      error.name === 'SequelizeValidationError' ||
+      error.name === 'SequelizeUniqueConstraintError'
+    ) {
       author = await Author.build(req.body);
       author.id = req.params.id;
       res.render('authors/edit', {

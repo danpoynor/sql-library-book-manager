@@ -1,7 +1,6 @@
 extends ../layout
 
 block content
-  include ../includes/subhead.pug
 
   p
     a(class="button" href="/genres/new")
@@ -11,7 +10,8 @@ block content
     p.errors
       | No genres found.
   else
-    table
+
+    table.data-table
       thead
         tr
           th Name
@@ -21,14 +21,18 @@ block content
       tbody.hover-row
         each genre in genres
           tr
-            td
+            td.sorted
               a(href=`/genres/${genre.id}`)= genre.name
-            td.number= genre.Books.length
+            if genre.Books.length
+              td.number
+                =genre.Books.length
+            else
+              td.number.dim 0
             td
               if genre.description
                 =genre.description
               else
-                span.errors No description
+                span.dim No description
             td.actions
               a(href=`/genres/${genre.id}`)
                 | View

@@ -16,14 +16,10 @@ exports.create = async (req, res) => {
     genre = await Genre.create(req.body);
     res.redirect('/genres/' + genre.id);
   } catch (error) {
-    if (error.name === 'SequelizeValidationError') {
-      genre = await Genre.build(req.body);
-      res.render('genres/new', {
-        genre,
-        errors: error.errors,
-        title: 'New Genre'
-      });
-    } else if (error.name === 'SequelizeUniqueConstraintError') {
+    if (
+      error.name === 'SequelizeValidationError' ||
+      error.name === 'SequelizeUniqueConstraintError'
+    ) {
       genre = await Genre.build(req.body);
       res.render('genres/new', {
         genre,
@@ -96,17 +92,13 @@ exports.update = async (req, res) => {
       res.sendStatus(404);
     }
   } catch (error) {
-    if (error.name === 'SequelizeValidationError') {
+    if (
+      error.name === 'SequelizeValidationError' ||
+      error.name === 'SequelizeUniqueConstraintError'
+    ) {
       genre = await Genre.build(req.body);
       genre.id = req.params.id;
       res.render('genres/edit', { genre, errors: error.errors, title: 'Edit Genre' });
-    } else if (error.name === 'SequelizeUniqueConstraintError') {
-      genre = await Genre.build(req.body);
-      res.render('genres/new', {
-        genre,
-        errors: error.errors,
-        title: 'New Genre'
-      });
     } else {
       throw error;
     }

@@ -1,14 +1,25 @@
 'use strict';
 const { Model, DataTypes } = require('sequelize');
 const { DateTime } = require('luxon');
-// const { Book } = require('../models');
-const Book = require('./book');
 
 module.exports = (sequelize) => {
   class Author extends Model {
     fullName() {
-      const name = `${this.first_name} ${this.last_name}`;
-      return name;
+      return `${this.first_name} ${this.last_name}`;
+    }
+    dob() {
+      if (this.date_of_birth) {
+        return DateTime.fromISO(this.date_of_birth).toLocaleString(DateTime.DATE_HUGE);
+      } else {
+        return null;
+      }
+    }
+    dod() {
+      if (this.date_of_death) {
+        return DateTime.fromISO(this.date_of_death).toLocaleString(DateTime.DATE_HUGE);
+      } else {
+        return null;
+      }
     }
 
     static associate(models) {
@@ -48,7 +59,9 @@ module.exports = (sequelize) => {
             msg: '"Last Name" must be between 2 and 255 characters'
           }
         }
-      }
+      },
+      date_of_birth: DataTypes.DATEONLY,
+      date_of_death: DataTypes.DATEONLY
     },
     {
       sequelize,

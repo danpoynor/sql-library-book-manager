@@ -3,12 +3,12 @@ if(errors)
 
 fieldset
   label(for="title") Title:
-  input(type="text" name="title" placeholder="Book Title" autocomplete=false value=book.title)
+  input(type="text" name="title" id="title" placeholder="Book Title" autocomplete=false value=book.title)
 
 fieldset
   label(for="author_id") Author:
 
-  select(name="author_id")
+  select(name="author_id" id="author_id")
     if (!book.Author)
       option(value="") Select Author
     //- Loop through authors
@@ -23,7 +23,7 @@ fieldset
             = author.fullName()
 
 fieldset
-  label(for="genre") Genre:
+  label Genre:
 
   .checkboxes
     //- TODO: This could probably be shortened to only have
@@ -55,6 +55,6 @@ fieldset
 fieldset
   label(for="year") Year:
   - const currentYear = new Date().getFullYear();
-  input(type="number" name="year" min="0000" max=currentYear step="1" placeholder=currentYear autocomplete=false value=book.year)
+  input(type="number" name="year" id="year" min="0000" max=currentYear step="1" placeholder=currentYear autocomplete=false value=book.year)
 
 input(type="submit" value=book.id ? "Update Book" : "Create New Book")

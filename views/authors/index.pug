@@ -1,7 +1,6 @@
 extends ../layout
 
 block content
-  include ../includes/subhead.pug
 
   p
     a(class="button" href="/authors/new")
@@ -11,18 +10,27 @@ block content
     p.errors
       | No authors found.
   else
-    table
+
+    table.data-table
       thead
         tr
           th Name
           th Book Count
+          th Date of Birth
+          th Date of Death
           th Actions
       tbody.hover-row
         each author in authors
           tr
             td
               a(href=`/authors/${author.id}`)= author.fullName()
-            td.number= author.Books.length
+            if author.Books.length
+              td.number.sorted
+                =author.Books.length
+            else
+              td.number.dim No books
+            td= author.dob()
+            td= author.dod()
             td.actions
               a(href=`/authors/${author.id}`)
                 | View

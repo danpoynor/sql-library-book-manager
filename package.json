@@ -24,6 +24,6 @@
     "pug": "^3.0.2",
     "sequelize": "^6.17.0",
     "sequelize-cli": "^6.4.1",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "npm:@vscode/sqlite3@5.0.7"
   }
 }

@@ -1,17 +1,24 @@
 extends ../layout
 
+include ../includes/search-form.pug
+include ../includes/paginator.pug
+
 block content
-  include ../includes/subhead.pug
 
   p
     a(class="button" href="/books/new")
       | Create Book &#43;
 
+  +search-form()
+
   if(books.length === 0)
     p.errors
       | No books found.
   else
-    table
+
+    +paginator(books.count)
+
+    table.data-table
       thead
         tr
           th Title
@@ -20,13 +27,14 @@ block content
           th Year
           th Actions
       tbody.hover-row
-        each book in books
+        each book in books.rows
           tr
             td
               a(href=`/books/${book.id}`)= book.title
             td
               //- Since book validation requires an author this shouldn't be needed
-              //- in production, but it's here for devtime convenience.
+              //- in final version, but it's here for devtime convenience since I
+              //- sometimes edit content for testing and don't include an author.
               if book.Author
                 a(href=`/authors/${book.Author.id}`)= book.Author.fullName()
               else
@@ -39,7 +47,7 @@ block content
                   = book.Genres.length -1 !== index ? ', ' : ''
               else
                 span.errors No Genres
-            td
+            td.sorted
               if(book.year)
                 = book.year
               else
